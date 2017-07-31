@@ -5,8 +5,6 @@ import Routes
 import Models exposing (Model, initialModel)
 import Messages exposing (Msg)
 import Views exposing (view)
-import Html exposing (Html, text, div, p)
-import Html.Attributes exposing (id, src)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
@@ -17,7 +15,10 @@ init location =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+  case msg of
+    Messages.OnLocationChange location ->
+      let newRoute = Routes.parseLocation location
+      in ( { model | route = newRoute }, Cmd.none )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

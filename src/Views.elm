@@ -1,17 +1,26 @@
 module Views exposing (..)
 
-import Html exposing (Html, text, div, p)
-import Html.Attributes exposing (id, src)
-import Models exposing (Model, Route)
+import Html exposing (Html, text, div, p, nav, a)
+import Html.Attributes exposing (id, src, href)
+import Models exposing (Model, Route, urls)
 import Messages exposing (Msg)
 
 view : Model -> Html Msg
 view model =
     div [id "root"]
     [
-        p [] [text "Navigation"],
+        navigation,
         page model
     ]
+
+navigation : Html msg
+navigation =
+  nav []
+  [
+    a [href ("#" ++ urls.typing)] [text "Type text"],
+    a [href ("#" ++ urls.writing)] [text "Test your writing skills"],
+    a [href ("#" ++ urls.reading)] [text "Test your reading skills"]
+  ]
 
 page : Model -> Html Msg
 page model =
@@ -40,14 +49,14 @@ trainingView model =
     [
       p [] [text "Hello from training"]
     ]
-homeView : Html Msg
+homeView : Html msg
 homeView = 
     div [id "home"]
     [
       p [] [text "This is home"]
     ]
 
-notFound : Html Msg
+notFound : Html msg
 notFound = 
     div [id "notfound"]
     [

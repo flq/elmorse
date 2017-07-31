@@ -2,16 +2,15 @@ module Routes exposing (..)
 
 import Navigation exposing (Location)
 import UrlParser exposing (..)
-import Models exposing (Route(..))
-
+import Models exposing (Route(..), urls)
 
 matchers : Parser (Route -> a) a
 matchers = oneOf
     [ 
       map Home top,
-      map Typing (s "typing"),
-      map Reading (s "writing-morse"),
-      map Writing (s "reading-morse")
+      map Typing (s urls.typing),
+      map Reading (s urls.reading),
+      map Writing (s urls.writing)
     ]
 
 parseLocation : Location -> Route

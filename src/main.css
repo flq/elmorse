@@ -18,6 +18,91 @@ body {
   flex-wrap: wrap;
 }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+}
+
+nav > a {
+  display: block;
+  text-align: right;
+  background-color: gray;
+  color: white;
+  text-decoration: none;
+  margin: 0 5px 0 0;
+  padding: 1em 10px 10px 20px;
+  width: 6em;
+  min-height: 2em;
+}
+
+nav > a.active {
+  background-color: darkred;
+}
+
+nav > a:hover {
+  background-color: black;
+}
+
+nav.sub {
+  font-size: 1.2em; 
+}
+
+nav.sub > a {
+  padding: 5px;
+}
+
+#globalCommands {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  min-height: 2em;
+  max-width: 3em;
+  
+}
+
+#globalCommands a {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  background-color: lightgray; 
+  margin: 0px 5px 5px 5px;
+  padding: 5px;
+}
+
+#globalCommands a:hover {
+  background-color: darkred;
+}
+
+#globalCommands a:active {
+  background-color: black;
+}
+
+span.tooltiptext {
+    visibility: hidden;
+    font-weight: 100;
+    font-size:1em;
+    max-width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    margin: -5px 0px 0px 35px;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+a:hover + span.tooltiptext, span:hover + span.tooltiptext {
+    visibility: visible;
+}
+
 .toolBox {
   display: flex;
   flex-direction: row;
