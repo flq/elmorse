@@ -146,3 +146,44 @@ a:hover + span.tooltiptext, span:hover + span.tooltiptext {
   font-weight: bold;
   padding: 0.8em;
 }
+
+.typingScreen .userInput {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+.typingScreen .soundButton {
+  font-size: 1.5em;
+}
+
+.typingScreen form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+.soundControls {
+  display: flex;
+  align-items: center;
+}
+
+.soundControls > * {
+  margin-right: 10px;
+}
+
+.morseWord {
+    font-size: 2em;
+    font-family: Consolas;
+    display: flex;
+    flex-direction: row;
+}
+
+.morseToken {
+    background: lightgray;
+    margin: 0 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 3.4em;
+    text-transform: capitalize;
+    box-shadow: 4px 4px 10px;
+}

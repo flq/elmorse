@@ -3,24 +3,17 @@ module Views exposing (..)
 import Html exposing (Html, text, div, p, nav, a)
 import Html.Attributes exposing (id, src, href)
 import Models exposing (Model, Route, urls)
+import Views.Typing exposing (typingView)
+import Views.Navigation exposing (navigation)
 import Messages exposing (Msg)
 
 view : Model -> Html Msg
 view model =
     div [id "root"]
     [
-        navigation,
+        navigation model.route,
         page model
     ]
-
-navigation : Html msg
-navigation =
-  nav []
-  [
-    a [href ("#" ++ urls.typing)] [text "Type text"],
-    a [href ("#" ++ urls.writing)] [text "Test your writing skills"],
-    a [href ("#" ++ urls.reading)] [text "Test your reading skills"]
-  ]
 
 page : Model -> Html Msg
 page model =
@@ -35,13 +28,6 @@ page model =
           trainingView model
         Models.NotFoundRoute ->
           notFound
-
-typingView : Model -> Html msg
-typingView model = 
-    div [id "typing"]
-    [
-      p [] [text "Hello from typing"]
-    ]
 
 trainingView : Model -> Html msg
 trainingView model = 

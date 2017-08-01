@@ -19,6 +19,8 @@ update msg model =
     Messages.OnLocationChange location ->
       let newRoute = Routes.parseLocation location
       in ( { model | route = newRoute }, Cmd.none )
+    Messages.OnUserInput input ->
+      ({ model | userInput = input }, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

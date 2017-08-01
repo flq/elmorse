@@ -17,11 +17,13 @@ urls =
 
 type alias Model =
     {
-      route : Route
+      route : Route,
+      userInput : String
     }
 
 initialModel : Route -> Model
 initialModel route =
     { 
-      route = route
+      route = route,
+      userInput = ""
     }
