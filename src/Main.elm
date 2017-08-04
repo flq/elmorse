@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Update exposing (update)
 import Navigation exposing (Location)
 import Routes
 import Models exposing (Model, initialModel)
@@ -12,15 +13,6 @@ init location =
         currentRoute = Routes.parseLocation location
     in
         ( initialModel currentRoute, Cmd.none )
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-  case msg of
-    Messages.OnLocationChange location ->
-      let newRoute = Routes.parseLocation location
-      in ( { model | route = newRoute }, Cmd.none )
-    Messages.OnUserInput input ->
-      ({ model | userInput = input }, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
