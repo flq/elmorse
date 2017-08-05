@@ -1,5 +1,8 @@
 module Morse exposing (
-  charToMorseCode, stringToMorseSymbols, MorseSymbol(..))
+  letters,
+  charToMorseCode, 
+  stringToMorseSymbols, 
+  MorseSymbol(..))
 
 import List exposing (map2, map)
 import String exposing (concat, toList)

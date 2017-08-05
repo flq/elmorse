@@ -4,8 +4,9 @@ import Html exposing (Html, text, div, p, nav, a)
 import Html.Attributes exposing (id, src, href)
 import Models exposing (Model, Route, urls)
 import Views.Typing exposing (typingView)
+import Views.Training
 import Views.Navigation exposing (navigation)
-import Messages exposing (Msg)
+import Msg exposing (Msg)
 
 view : Model -> Html Msg
 view model =
@@ -25,7 +26,7 @@ page model =
         Models.Reading ->
           trainingView model
         Models.Writing ->
-          trainingView model
+          Views.Training.view model
         Models.NotFoundRoute ->
           notFound
 

@@ -7,7 +7,7 @@ import Html.Attributes exposing (
   id, class, href, autofocus, type_, autocomplete, value)
 import Html.Events exposing (onInput, onClick)
 import Models exposing (Model)
-import Messages exposing (..)
+import Msg exposing (..)
 import Morse exposing (charToMorseCode)
 
 typingView : Model -> Html Msg

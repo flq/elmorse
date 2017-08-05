@@ -5,7 +5,7 @@ import Task exposing (perform, succeed)
 import Time exposing (millisecond)
 import Delay exposing (after,sequence)
 import Models exposing (Model)
-import Messages exposing (Msg (SoundMsg, NoOp))
+import Msg exposing (Msg (SoundMsg, NoOp))
 import MsgAudio exposing (SoundMsg(..))
 import Morse exposing (..)
 {- 

@@ -18,12 +18,24 @@ urls =
 type alias Model =
     {
       route : Route,
-      userInput : String
+      userInput : String,
+      lettersInScope : List String,
+      trainCount : Int,
+      trainingStarted : Bool,
+      trainingTime : Int,
+      itemsLeft : Int,
+      results : List Bool
     }
 
 initialModel : Route -> Model
 initialModel route =
     { 
       route = route,
-      userInput = ""
+      userInput = "",
+      lettersInScope = [],
+      trainCount = 10,
+      trainingTime = 0,
+      itemsLeft = 0,
+      results = [],
+      trainingStarted = False
     }

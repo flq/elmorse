@@ -1,6 +1,6 @@
 module Update exposing(..)
 
-import Messages exposing (Msg(..))
+import Msg exposing (Msg(..))
 import Models exposing (Model, initialModel)
 import Routes
 import MorseAudio
@@ -18,5 +18,7 @@ update msg model =
       (model, MorseAudio.playWords model.userInput)
     SoundMsg msg -> 
       MorseAudio.update msg model
+    TrainMsg msg ->
+      (model, Cmd.none)
     NoOp ->
       (model, Cmd.none)
