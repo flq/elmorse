@@ -32,6 +32,7 @@ update msg model =
             []
       in
         ({model | lettersInScope = newScope}, Cmd.none)
-
-
-    _ -> (model, Cmd.none)
+    StartTraining ->
+      ({ model | trainingStarted = True, trainingTime = -4 }, Cmd.none)
+    StopTraining ->
+      ({ model | trainingStarted = False, trainingTime = 0 }, Cmd.none)

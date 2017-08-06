@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Update exposing (update)
+import Update exposing (update, subscriptions)
 import Navigation exposing (Location)
 import Routes
 import Models exposing (Model, initialModel)
@@ -13,10 +13,6 @@ init location =
         currentRoute = Routes.parseLocation location
     in
         ( initialModel currentRoute, Cmd.none )
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
 
 main : Program Never Model Msg
 main = Navigation.program Msg.OnLocationChange
