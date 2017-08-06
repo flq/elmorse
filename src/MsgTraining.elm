@@ -6,4 +6,5 @@ type TrainMsg
   | SelectAllLetters
   | DeselectAllLetters
   | ToggleLetter String
+  | ChangeTrainingSize String
   

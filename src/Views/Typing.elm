@@ -16,7 +16,12 @@ typingView model =
     [
       form []
       [
-        input [autofocus True, type_ "text", class "userInput", onInput OnUserInput] [],
+        input [
+          autofocus True, 
+          type_ "text", 
+          class "userInput", 
+          value model.userInput,
+          onInput OnUserInput] [],
         div [class "soundControls"]
         [
           input [

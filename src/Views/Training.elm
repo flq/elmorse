@@ -4,7 +4,7 @@ import Html exposing (
   Html, section, text, div, h2, span, a, button, input)
 import Html.Attributes as Att exposing (
   id, class, classList, disabled, type_, min, max, step, value)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 import Models exposing (Model)
 import Morse exposing (letters)
 import Msg exposing (..)
@@ -45,7 +45,8 @@ trainingConfig model =
           Att.min "10", 
           Att.max "100", 
           step "10", 
-          value theTrainCount] [],
+          value theTrainCount,
+          onInput (TrainMsg << ChangeTrainingSize)] [],
         h2 [] [text (String.concat [theTrainCount, " times."])],
         button [
           onClick (TrainMsg StartTraining), 

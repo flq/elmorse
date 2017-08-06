@@ -4,6 +4,7 @@ import Msg exposing (Msg(..))
 import Models exposing (Model, initialModel)
 import Routes
 import MorseAudio
+import UpdateTraining
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -19,6 +20,6 @@ update msg model =
     SoundMsg msg -> 
       MorseAudio.update msg model
     TrainMsg msg ->
-      (model, Cmd.none)
+      UpdateTraining.update msg model
     NoOp ->
       (model, Cmd.none)
