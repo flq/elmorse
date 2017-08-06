@@ -1,10 +1,11 @@
 module Morse exposing (
   letters,
+  letterScopeSize,
   charToMorseCode, 
   stringToMorseSymbols, 
   MorseSymbol(..))
 
-import List exposing (map2, map)
+import List exposing (map2, map, length)
 import String exposing (concat, toList)
 import Dict exposing (Dict, fromList, get)
 
@@ -20,6 +21,9 @@ letters =
     "y", "z",
     "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
   ]
+
+letterScopeSize : Int
+letterScopeSize = length letters
 
 codes : List String
 codes = 

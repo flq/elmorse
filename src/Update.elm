@@ -2,6 +2,7 @@ module Update exposing(..)
 
 import Time exposing (second)
 import Msg exposing (Msg(..))
+import MsgTraining exposing (TrainMsg(TrainingTick))
 import Models exposing (Model, initialModel)
 import Routes
 import MorseAudio
@@ -18,8 +19,6 @@ update msg model =
       ({ model | userInput = input }, Cmd.none)
     OnListenToMorse ->
       (model, MorseAudio.playWords model.userInput)
-    TrainingTick _ ->
-      ({ model | trainingTime = model.trainingTime + 1 }, Cmd.none)
     SoundMsg msg -> 
       MorseAudio.update msg model
     TrainMsg msg ->
@@ -30,6 +29,6 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     if model.trainingStarted then
-        Time.every second TrainingTick
+        Time.every second (TrainMsg << TrainingTick)
     else
         Sub.none

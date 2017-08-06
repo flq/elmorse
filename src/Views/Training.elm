@@ -1,7 +1,7 @@
 module Views.Training exposing (view)
 
 import Html exposing (
-  Html, section, text, div, h2, span, a, button, input)
+  Html, section, text, div, h2, p, span, a, button, input)
 import Html.Attributes as Att exposing (
   id, class, classList, disabled, type_, min, max, step, value)
 import Html.Events exposing (onClick, onInput)
@@ -62,14 +62,21 @@ trainingView model =
   in
     div [id "training"]
     [
-      div [class "toolbox"]
+      div [class "toolBox"]
       [
         button [disabled False, onClick (TrainMsg StopTraining)] [text "Stop the Training"],
         numberWithUnit trainingTime "seconds",
         numberWithUnit itemsLeft "items left",
         showPreparation trainingTime
       ],
-      showResults results
+      showResults results,
+      div []
+      [
+        if model.currentTrainTarget /= "" then
+          p [] [text model.currentTrainTarget]
+        else
+          none
+      ]
     ]
 
 numberWithUnit : Int -> String -> Html msg

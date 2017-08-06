@@ -24,7 +24,8 @@ type alias Model =
       trainingStarted : Bool,
       trainingTime : Int,
       itemsLeft : Int,
-      results : List Bool
+      results : List Bool,
+      currentTrainTarget : String
     }
 
 initialModel : Route -> Model
@@ -37,5 +38,6 @@ initialModel route =
       trainingTime = 0,
       itemsLeft = 0,
       results = [],
-      trainingStarted = False
+      trainingStarted = False,
+      currentTrainTarget = ""
     }

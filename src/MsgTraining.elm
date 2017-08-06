@@ -1,5 +1,7 @@
 module MsgTraining exposing(..)
 
+import Time exposing (Time)
+
 type TrainMsg 
   = StopTraining
   | StartTraining
@@ -7,4 +9,6 @@ type TrainMsg
   | DeselectAllLetters
   | ToggleLetter String
   | ChangeTrainingSize String
+  | TrainingTick Time
+  | NewTrainingStep Int
   
