@@ -5,7 +5,7 @@ import Navigation exposing (Location)
 import Routes
 import Models exposing (Model, initialModel)
 import Msg exposing (Msg)  
-import Views exposing (view)
+import Views.Main exposing (view)
 
 init : Location -> ( Model, Cmd Msg )
 init location =

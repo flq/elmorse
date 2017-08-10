@@ -1,7 +1,8 @@
 module Morse exposing (
   letters,
   letterScopeSize,
-  charToMorseCode, 
+  charToMorseCode,
+  stringToMorseCode,
   stringToMorseSymbols, 
   MorseSymbol(..))
 

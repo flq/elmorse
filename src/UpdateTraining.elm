@@ -1,12 +1,16 @@
 module UpdateTraining exposing (update)
 
-import String exposing(toInt)
-import List exposing(length, partition)
+import String exposing(toInt, fromChar)
+import Time exposing (millisecond)
+import Char exposing(fromCode)
+import List exposing(length, partition, filter)
 import Random
+import Delay
+import Utility exposing (getWithDefault, message)
 import MsgTraining exposing (TrainMsg(..))
 import Models exposing (Model)
 import Msg exposing (Msg (TrainMsg, NoOp))
-import Morse exposing (letters, letterScopeSize)
+import Morse exposing (letters, letterScopeSize, stringToMorseCode)
 
 update : TrainMsg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -20,19 +24,39 @@ update msg model =
     ToggleLetter letter ->
       toggleLetter model letter
     StartTraining ->
-      ({ model | trainingStarted = True, trainingTime = -4 }, Cmd.none)
+      ({ model | 
+         trainingStarted = True, 
+         trainingTime = -4,
+         itemsLeft = model.trainCount,
+         results = [] }, Cmd.none)
     StopTraining ->
       ({ model | 
-         trainingStarted = False, 
+         trainingStarted = False,
+         successRate = Nothing,
          trainingTime = 0, 
-         currentTrainTarget = "" }, Cmd.none)
+         currentTrainTarget = "",
+         currentTrainAim = "" }, Cmd.none)
+    TrainAimSuceeded ->
+      trainAimMatched model True
+    TrainAimFailed ->
+      trainAimMatched model False
     TrainingTick _ ->
       actOnTick model
     NewTrainingStep index ->
       let
+        get = getWithDefault "a"
         newTrainTarget = get index model.lettersInScope
       in
         ({ model | currentTrainTarget = newTrainTarget }, Cmd.none)
+    UserKey keyCode ->
+      handleUserInput model keyCode
+    TrainingDone ->
+      let
+        successAmount = filter ((==) True) model.results |> length
+        successRate = (successAmount |> toFloat) /
+                      (model.trainCount |> toFloat) |> (*) 100 |> round
+      in
+        ({ model | successRate = Just successRate }, Cmd.none)
 
 changeTrainingSize : Model -> String -> (Model, Cmd msg)
 changeTrainingSize model input =
@@ -60,16 +84,47 @@ actOnTick : Model -> (Model, Cmd Msg )
 actOnTick model =
   let
     nextModel = { model | trainingTime = model.trainingTime + 1 }
-    randomNumber = (Random.int 0 (length model.lettersInScope - 1))
   in
     if model.trainingTime /= -1 then
       (nextModel, Cmd.none)
     else
-      (nextModel, Random.generate (TrainMsg << NewTrainingStep) randomNumber)
+      (nextModel, nextStep model)
 
+handleUserInput : Model -> Char.KeyCode -> (Model, Cmd Msg)
+handleUserInput model keyCode =
+  let
+    { currentTrainAim, currentTrainTarget } = model
+    newCurrentAim = currentTrainAim ++ (fromCode >> fromChar) keyCode
+    expected = stringToMorseCode currentTrainTarget
+    isMatch = 
+      if String.length newCurrentAim == String.length expected then
+        Just (newCurrentAim == expected)
+      else
+        Nothing
+    cmd = case isMatch of
+      Just True -> Delay.after 300 millisecond (TrainMsg TrainAimSuceeded)
+      Just False -> Delay.after 300 millisecond (TrainMsg TrainAimFailed)
+      Nothing -> Cmd.none
+  in
+    ({ model | currentTrainAim = newCurrentAim }, cmd)
 
-get : Int -> List String -> String
-get n xs = 
-  case List.head (List.drop n xs) of
-  Just s -> s
-  Nothing -> "a"
+trainAimMatched : Model -> Bool -> ( Model, Cmd Msg )
+trainAimMatched model success =
+  ({ model | 
+     results = model.results ++ [success],
+     itemsLeft = model.itemsLeft - 1,
+     currentTrainTarget = "",
+     currentTrainAim = "" }, nextStep model)
+
+nextStep : Model -> Cmd Msg
+nextStep model =
+  let
+    randomNumber = (Random.int 0 (length model.lettersInScope - 1))
+  in
+    {- Smells weird, but this is while itemsLeft is set to 0,
+       so it's the right moment to end the training -}
+    if model.itemsLeft == 1 then
+      message (TrainMsg TrainingDone)
+    else
+      Random.generate (TrainMsg << NewTrainingStep) randomNumber
+

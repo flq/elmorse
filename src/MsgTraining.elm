@@ -1,6 +1,7 @@
 module MsgTraining exposing(..)
 
 import Time exposing (Time)
+import Keyboard exposing (KeyCode)
 
 type TrainMsg 
   = StopTraining
@@ -11,4 +12,8 @@ type TrainMsg
   | ChangeTrainingSize String
   | TrainingTick Time
   | NewTrainingStep Int
+  | UserKey KeyCode
+  | TrainAimSuceeded
+  | TrainAimFailed
+  | TrainingDone
   

@@ -70,12 +70,17 @@ trainingView model =
         showPreparation trainingTime
       ],
       showResults results,
+      case model.successRate of
+        Just rate -> wellDone rate
+        Nothing -> none,
       div []
       [
         if model.currentTrainTarget /= "" then
           p [] [text model.currentTrainTarget]
-        else
-          none
+        else none,
+        if model.currentTrainAim /= "" then
+          p [] [text model.currentTrainAim]
+        else none
       ]
     ]
 
@@ -90,7 +95,7 @@ numberWithUnit value unit =
 showResults : List Bool -> Html msg
 showResults results =
   let
-    boolAsSpan b = span [classList [("success", b),("fail", b)]] []
+    boolAsSpan b = span [classList [("success", b),("fail", not b)]] []
     children = List.map boolAsSpan results
   in
     div [id "results"] children
@@ -109,6 +114,12 @@ showPreparation trainingTime =
         _ -> ""
   in
     h2 [] [text txt]
+
+wellDone rate =
+  h2 []
+  [
+    text ("Well done, you got " ++ toString rate ++ " % right!")
+  ]
 
 letterScope : List String -> Html Msg
 letterScope lettersInScope =

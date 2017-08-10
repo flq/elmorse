@@ -1,7 +1,6 @@
 module MorseAudio exposing (update, playWords)
 
 import Interop exposing(..)
-import Task exposing (perform, succeed)
 import Time exposing (millisecond)
 import Delay exposing (after,sequence)
 import Models exposing (Model)
@@ -75,6 +74,3 @@ bringTogether = List.concat >> List.map toSequenceTuple >> sequence
 
 toSequenceTuple : ( Milliseconds, Msg ) -> (Milliseconds, Time.Time, Msg)
 toSequenceTuple (time, msg) = (time, millisecond, msg) 
-
-message : Msg -> Cmd Msg
-message msg = perform identity (succeed msg)

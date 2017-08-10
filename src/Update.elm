@@ -1,8 +1,9 @@
 module Update exposing(..)
 
 import Time exposing (second)
+import Keyboard exposing (presses)
 import Msg exposing (Msg(..))
-import MsgTraining exposing (TrainMsg(TrainingTick))
+import MsgTraining exposing (TrainMsg(TrainingTick, UserKey))
 import Models exposing (Model, initialModel)
 import Routes
 import MorseAudio
@@ -28,7 +29,11 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    if model.trainingStarted then
-        Time.every second (TrainMsg << TrainingTick)
-    else
-        Sub.none
+    Sub.batch
+    [
+      if model.trainingStarted && model.successRate == Nothing then
+          Time.every second (TrainMsg << TrainingTick)
+      else
+          Sub.none,
+      presses (TrainMsg << UserKey)
+    ]
