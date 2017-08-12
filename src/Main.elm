@@ -2,15 +2,15 @@ module Main exposing (..)
 
 import Update exposing (update, subscriptions)
 import Navigation exposing (Location)
-import Routes
+import Navigation.Routes as Route
 import Models exposing (Model, initialModel)
 import Msg exposing (Msg)  
-import Views.Main exposing (view)
+import View exposing (view)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
     let
-        currentRoute = Routes.parseLocation location
+        currentRoute = Route.parseLocation location
     in
         ( initialModel currentRoute, Cmd.none )
 

@@ -1,11 +1,11 @@
-module Views.Navigation exposing (navigation)
+module Navigation.View exposing (view)
 
 import Html exposing (Html, nav, a, text)
 import Html.Attributes exposing (classList, href)
 import Models exposing (Route, urls)
 
-navigation : Route -> Html msg
-navigation location =
+view : Route -> Html msg
+view location =
   let
       active route = classList [("active", location == route)]
   in    

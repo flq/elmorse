@@ -1,4 +1,4 @@
-module MsgTraining exposing(..)
+module Training.Msg exposing(..)
 
 import Time exposing (Time)
 import Keyboard exposing (KeyCode)

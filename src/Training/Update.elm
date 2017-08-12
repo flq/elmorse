@@ -1,4 +1,4 @@
-module UpdateTraining exposing (update)
+module Training.Update exposing (update)
 
 import String exposing(toInt, fromChar)
 import Time exposing (millisecond)
@@ -7,7 +7,7 @@ import List exposing(length, partition, filter)
 import Random
 import Delay
 import Utility exposing (getWithDefault, message)
-import MsgTraining exposing (TrainMsg(..))
+import Training.Msg exposing (TrainMsg(..))
 import Models exposing (Model)
 import Msg exposing (Msg (TrainMsg, NoOp))
 import Morse exposing (letters, letterScopeSize, stringToMorseCode)

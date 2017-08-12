@@ -1,4 +1,4 @@
-module Views.Training exposing (view)
+module Training.View exposing (view)
 
 import Html exposing (
   Html, section, text, div, h2, p, span, a, button, input)
@@ -8,7 +8,7 @@ import Html.Events exposing (onClick, onInput)
 import Models exposing (Model)
 import Morse exposing (letters)
 import Msg exposing (..)
-import MsgTraining exposing (TrainMsg(..))
+import Training.Msg exposing (TrainMsg(..))
 
 view : Model -> Html Msg
 view model = 

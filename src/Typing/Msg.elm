@@ -1,4 +1,4 @@
-module MsgAudio exposing(..)
+module Typing.Msg exposing(..)
 
 type SoundMsg 
   = StopSound

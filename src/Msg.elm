@@ -1,8 +1,8 @@
 module Msg exposing(..)
 
 import Navigation exposing (Location)
-import MsgAudio exposing (SoundMsg)
-import MsgTraining exposing (TrainMsg)
+import Typing.Msg exposing (SoundMsg)
+import Training.Msg exposing (TrainMsg)
 
 type Msg
     = OnLocationChange Location

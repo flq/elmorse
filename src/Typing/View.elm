@@ -1,4 +1,4 @@
-module Views.Typing exposing(..)
+module Typing.View exposing(view)
 
 import List exposing (map)
 import String exposing (fromChar, toList)
@@ -10,8 +10,8 @@ import Models exposing (Model)
 import Msg exposing (..)
 import Morse exposing (charToMorseCode)
 
-typingView : Model -> Html Msg
-typingView model = 
+view : Model -> Html Msg
+view model = 
     section [class "typingScreen"]
     [
       form []

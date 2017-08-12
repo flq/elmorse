@@ -1,18 +1,18 @@
-module Views.Main exposing (..)
+module View exposing (view)
 
 import Html exposing (Html, text, div, p, nav, a)
 import Html.Attributes exposing (id, src, href)
 import Models exposing (Model, Route, urls)
-import Views.Typing exposing (typingView)
-import Views.Training
-import Views.Navigation exposing (navigation)
+import Typing.View as Typing exposing (view)
+import Training.View as Training exposing (view)
+import Navigation.View as Navigation exposing (view)
 import Msg exposing (Msg)
 
 view : Model -> Html Msg
 view model =
     div [id "root"]
     [
-        navigation model.route,
+        Navigation.view model.route,
         page model
     ]
 
@@ -22,11 +22,11 @@ page model =
         Models.Home ->
           homeView
         Models.Typing ->
-          typingView model
+          Typing.view model
         Models.Reading ->
           trainingView model
         Models.Writing ->
-          Views.Training.view model
+          Training.view model
         Models.NotFoundRoute ->
           notFound
 
@@ -36,6 +36,7 @@ trainingView model =
     [
       p [] [text "Hello from training"]
     ]
+
 homeView : Html msg
 homeView = 
     div [id "home"]

@@ -3,27 +3,27 @@ module Update exposing(..)
 import Time exposing (second)
 import Keyboard exposing (presses)
 import Msg exposing (Msg(..))
-import MsgTraining exposing (TrainMsg(TrainingTick, UserKey))
+import Training.Msg exposing (TrainMsg(TrainingTick, UserKey))
 import Models exposing (Model, initialModel)
-import Routes
-import MorseAudio
-import UpdateTraining
+import Navigation.Routes as Route
+import Typing.MorseAudio as Audio
+import Training.Update as Training
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
     OnLocationChange location ->
-      let newRoute = Routes.parseLocation location
+      let newRoute = Route.parseLocation location
       in ( { model | route = newRoute }, Cmd.none )
     OnUserInput input ->
       ({ model | userInput = input }, Cmd.none)
     OnListenToMorse ->
-      (model, MorseAudio.playWords model.userInput)
+      (model, Audio.playWords model.userInput)
     SoundMsg msg -> 
-      MorseAudio.update msg model
+      Audio.update msg model
     TrainMsg msg ->
-      UpdateTraining.update msg model
+      Training.update msg model
     NoOp ->
       (model, Cmd.none)
 

@@ -1,11 +1,11 @@
-module MorseAudio exposing (update, playWords)
+module Typing.MorseAudio exposing (update, playWords)
 
-import Interop exposing(..)
+import Typing.Interop exposing(..)
 import Time exposing (millisecond)
 import Delay exposing (after,sequence)
 import Models exposing (Model)
 import Msg exposing (Msg (SoundMsg, NoOp))
-import MsgAudio exposing (SoundMsg(..))
+import Typing.Msg exposing (SoundMsg(..))
 import Morse exposing (..)
 {- 
 based on
