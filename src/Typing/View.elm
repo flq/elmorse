@@ -3,7 +3,7 @@ module Typing.View exposing(view)
 import List exposing (map)
 import String exposing (fromChar, toList)
 import Html exposing (Html, text, div, p, span, section, form, input)
-import Html.Attributes exposing (
+import Html.Attributes as Att exposing (
   id, class, href, autofocus, type_, autocomplete, value)
 import Html.Events exposing (onInput, onClick)
 import Models exposing (Model)
@@ -24,6 +24,15 @@ view model =
           onInput OnUserInput] [],
         div [class "soundControls"]
         [
+          input [
+            type_ "range",
+            Att.min "0.4",
+            Att.max "1.2",
+            Att.step "0.1",
+            value <| toString model.morseSpeed,
+            onInput OnChangeMorseSpeed
+          ] [],
+          span [] [text <| (++) (model.morseSpeed * 100 |> round |> toString) " %"],
           input [
             type_ "button", 
             class "soundButton", 

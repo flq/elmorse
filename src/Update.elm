@@ -5,6 +5,7 @@ import Keyboard exposing (presses)
 import Msg exposing (Msg(..))
 import Training.Msg exposing (TrainMsg(TrainingTick, UserKey))
 import Models exposing (Model, initialModel)
+import StateStorage exposing (saveAppState)
 import Navigation.Routes as Route
 import Typing.MorseAudio as Audio
 import Training.Update as Training
@@ -18,8 +19,17 @@ update msg model =
       in ( { model | route = newRoute }, Cmd.none )
     OnUserInput input ->
       ({ model | userInput = input }, Cmd.none)
+    OnChangeMorseSpeed input ->
+      let
+        newSpeed = case String.toFloat input of
+          Ok val -> val
+          Err _ -> model.morseSpeed
+      in
+        ({ model | morseSpeed = newSpeed }, Cmd.none)
     OnListenToMorse ->
-      (model, Audio.playWords model.userInput)
+      (model, Audio.playWords model.userInput model.morseSpeed)
+    SaveAppState ->
+      (model, Cmd.none)
     SoundMsg msg -> 
       Audio.update msg model
     TrainMsg msg ->

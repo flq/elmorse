@@ -1,6 +1,6 @@
 module Typing.MorseAudio exposing (update, playWords)
 
-import Typing.Interop exposing(..)
+import Interop exposing(..)
 import Time exposing (millisecond)
 import Delay exposing (after,sequence)
 import Models exposing (Model)
@@ -34,19 +34,24 @@ pauseBetweenChars = dashLength
 pauseBetweenWords: Milliseconds
 pauseBetweenWords = 400
 
-playWords : String -> Cmd Msg
-playWords = stringToMorseSymbols 
-  >> List.map convertSymbolToCommands 
-  >> bringTogether
+playWords : String -> Float -> Cmd Msg
+playWords words factor = 
+  stringToMorseSymbols words
+  |> List.map (convertSymbolToCommands factor)
+  |> bringTogether
   
-convertSymbolToCommands: MorseSymbol -> List (Milliseconds, Msg)
-convertSymbolToCommands symbol =
-  case symbol of
-    Dot -> playDot
-    Dash -> playDash
-    ShortPause -> playBetweenChars
-    LongPause -> playBetweenWords
-    Garbled -> playBetweenWords
+convertSymbolToCommands: Float -> MorseSymbol -> List (Milliseconds, Msg)
+convertSymbolToCommands factor symbol =
+  let
+    adapt (millisecs, msg) = (millisecs / factor, msg)
+    adaptl = List.map adapt
+  in
+    case symbol of
+      Dot -> adaptl playDot
+      Dash -> adaptl playDash
+      ShortPause -> adaptl playBetweenChars
+      LongPause -> adaptl playBetweenWords
+      Garbled -> adaptl playBetweenWords
 
 playDot: List (Milliseconds, Msg)
 playDot =  

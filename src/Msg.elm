@@ -7,7 +7,9 @@ import Training.Msg exposing (TrainMsg)
 type Msg
     = OnLocationChange Location
     | OnUserInput String
+    | OnChangeMorseSpeed String
     | OnListenToMorse
+    | SaveAppState
     | SoundMsg SoundMsg
     | TrainMsg TrainMsg
     | NoOp

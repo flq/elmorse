@@ -19,6 +19,7 @@ type alias Model =
     {
       route : Route,
       userInput : String,
+      morseSpeed : Float,
       lettersInScope : List String,
       trainCount : Int,
       trainingStarted : Bool,
@@ -30,11 +31,20 @@ type alias Model =
       currentTrainAim : String
     }
 
+type alias Progress =
+ {
+  userInput : String,
+  lettersInScope : List String,
+  morseSpeed : Float,
+  trainCount : Int
+ }
+
 initialModel : Route -> Model
 initialModel route =
     { 
       route = route,
       userInput = "",
+      morseSpeed = 1.0,
       lettersInScope = [],
       trainCount = 10,
       trainingTime = 0,
