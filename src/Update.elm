@@ -5,7 +5,7 @@ import Keyboard exposing (presses)
 import Msg exposing (Msg(..))
 import Training.Msg exposing (TrainMsg(TrainingTick, UserKey))
 import Models exposing (Model, initialModel)
-import StateStorage exposing (saveAppState)
+import StateStorage exposing (saveAppState,appStateLoaded, injectProgress)
 import Navigation.Routes as Route
 import Typing.MorseAudio as Audio
 import Training.Update as Training
@@ -17,6 +17,8 @@ update msg model =
     OnLocationChange location ->
       let newRoute = Route.parseLocation location
       in ( { model | route = newRoute }, Cmd.none )
+    OnAppStateLoaded progress ->
+      (injectProgress model progress, Cmd.none)
     OnUserInput input ->
       ({ model | userInput = input }, Cmd.none)
     OnChangeMorseSpeed input ->
@@ -29,7 +31,7 @@ update msg model =
     OnListenToMorse ->
       (model, Audio.playWords model.userInput model.morseSpeed)
     SaveAppState ->
-      (model, Cmd.none)
+      (model, saveAppState model)
     SoundMsg msg -> 
       Audio.update msg model
     TrainMsg msg ->
@@ -45,5 +47,6 @@ subscriptions model =
           Time.every second (TrainMsg << TrainingTick)
       else
           Sub.none,
-      presses (TrainMsg << UserKey)
+      presses (TrainMsg << UserKey),
+      appStateLoaded
     ]
