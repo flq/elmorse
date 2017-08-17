@@ -24,18 +24,11 @@ page model =
         Models.Typing ->
           Typing.view model
         Models.Reading ->
-          trainingView model
+          Training.view model
         Models.Writing ->
           Training.view model
         Models.NotFoundRoute ->
           notFound
-
-trainingView : Model -> Html msg
-trainingView model = 
-    div [id "training"]
-    [
-      p [] [text "Hello from training"]
-    ]
 
 homeView : Html msg
 homeView = 

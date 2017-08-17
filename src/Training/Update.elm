@@ -8,7 +8,7 @@ import Random
 import Delay
 import Utility exposing (getWithDefault, message)
 import Training.Msg exposing (TrainMsg(..))
-import Models exposing (Model)
+import Models exposing (Model, TrainTarget(..), Route(..))
 import Msg exposing (Msg (TrainMsg, NoOp))
 import Morse exposing (letters, letterScopeSize, stringToMorseCode)
 
@@ -34,7 +34,7 @@ update msg model =
          trainingStarted = False,
          successRate = Nothing,
          trainingTime = 0, 
-         currentTrainTarget = "",
+         currentTrainTarget = NoTraining,
          currentTrainAim = "" }, Cmd.none)
     TrainAimSuceeded ->
       trainAimMatched model True
@@ -45,7 +45,11 @@ update msg model =
     NewTrainingStep index ->
       let
         get = getWithDefault "a"
-        newTrainTarget = get index model.lettersInScope
+        trainTarget = get index model.lettersInScope
+        newTrainTarget = case model.route of
+          Reading -> ReadTraining trainTarget
+          Writing -> WriteTraining trainTarget
+          _ -> NoTraining
       in
         ({ model | currentTrainTarget = newTrainTarget }, Cmd.none)
     UserKey keyCode ->
@@ -95,7 +99,10 @@ handleUserInput model keyCode =
   let
     { currentTrainAim, currentTrainTarget } = model
     newCurrentAim = currentTrainAim ++ (fromCode >> fromChar) keyCode
-    expected = stringToMorseCode currentTrainTarget
+    expected = case currentTrainTarget of
+      WriteTraining s -> stringToMorseCode s
+      ReadTraining s -> s
+      _ -> ""
     isMatch = 
       if String.length newCurrentAim == String.length expected then
         Just (newCurrentAim == expected)
@@ -113,7 +120,7 @@ trainAimMatched model success =
   ({ model | 
      results = model.results ++ [success],
      itemsLeft = model.itemsLeft - 1,
-     currentTrainTarget = "",
+     currentTrainTarget = NoTraining,
      currentTrainAim = "" }, nextStep model)
 
 nextStep : Model -> Cmd Msg

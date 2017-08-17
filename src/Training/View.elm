@@ -5,8 +5,8 @@ import Html exposing (
 import Html.Attributes as Att exposing (
   id, class, classList, disabled, type_, min, max, step, value)
 import Html.Events exposing (onClick, onInput)
-import Models exposing (Model)
-import Morse exposing (letters)
+import Models exposing (Model, TrainTarget(..))
+import Morse exposing (letters, stringToMorseCode)
 import Msg exposing (..)
 import Training.Msg exposing (TrainMsg(..))
 
@@ -75,9 +75,7 @@ trainingView model =
         Nothing -> none,
       div []
       [
-        if model.currentTrainTarget /= "" then
-          p [] [text model.currentTrainTarget]
-        else none,
+        showCurrentTrainTarget model.currentTrainTarget,
         if model.currentTrainAim /= "" then
           p [] [text model.currentTrainAim]
         else none
@@ -115,6 +113,7 @@ showPreparation trainingTime =
   in
     h2 [] [text txt]
 
+wellDone : Int -> Html msg
 wellDone rate =
   h2 []
   [
@@ -138,6 +137,18 @@ letterSelector letter isInScope =
   [
     text letter
   ]
+
+showCurrentTrainTarget : TrainTarget -> Html msg
+showCurrentTrainTarget trainTarget =
+  let 
+    display = case trainTarget of
+      ReadTraining s -> stringToMorseCode s
+      WriteTraining s -> s
+      _ -> ""
+  in
+    if trainTarget /= NoTraining then
+      p [] [text display]
+    else none
 
 none : Html msg
 none = text ""

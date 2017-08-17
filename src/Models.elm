@@ -7,6 +7,11 @@ type Route
   | Writing
   | NotFoundRoute
 
+type TrainTarget
+  = ReadTraining String
+  | WriteTraining String
+  | NoTraining
+
 urls : { reading : String, typing : String, writing : String }
 urls = 
   {
@@ -27,7 +32,7 @@ type alias Model =
       itemsLeft : Int,
       results : List Bool,
       successRate : Maybe Int,
-      currentTrainTarget : String,
+      currentTrainTarget : TrainTarget,
       currentTrainAim : String
     }
 
@@ -52,6 +57,6 @@ initialModel route =
       results = [],
       successRate = Nothing,
       trainingStarted = False,
-      currentTrainTarget = "",
+      currentTrainTarget = NoTraining,
       currentTrainAim = ""
     }
