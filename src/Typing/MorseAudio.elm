@@ -44,14 +44,14 @@ convertSymbolToCommands: Float -> MorseSymbol -> List (Milliseconds, Msg)
 convertSymbolToCommands factor symbol =
   let
     adapt (millisecs, msg) = (millisecs / factor, msg)
-    adaptl = List.map adapt
+    adaptAll = List.map adapt
   in
-    case symbol of
-      Dot -> adaptl playDot
-      Dash -> adaptl playDash
-      ShortPause -> adaptl playBetweenChars
-      LongPause -> adaptl playBetweenWords
-      Garbled -> adaptl playBetweenWords
+    adaptAll <| case symbol of
+      Dot -> playDot
+      Dash -> playDash
+      ShortPause -> playBetweenChars
+      LongPause -> playBetweenWords
+      Garbled -> playBetweenWords
 
 playDot: List (Milliseconds, Msg)
 playDot =  
